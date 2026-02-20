@@ -1,15 +1,14 @@
-# ----------- Build stage -----------
-FROM gcc:latest AS builder
+# Käytetään GCC-kuvaa, jossa C-kääntäjä valmiina
+FROM gcc:latest
 
+# Työhakemisto kontissa
 WORKDIR /app
+
+# Kopioidaan C-ohjelma konttiin
 COPY main.c .
 
-RUN gcc -o hello-c main.c
+# Käännetään ohjelma nimellä c-docker-tehtava
+RUN gcc -o c-docker-tehtava main.c
 
-# ----------- Runtime stage -----------
-FROM alpine:latest
-
-WORKDIR /app
-COPY --from=builder /app/hello-c .
-
-CMD ["./hello-c"]
+# Ajetaan ohjelma kun kontti käynnistyy
+CMD ["./c-docker-tehtava"]
